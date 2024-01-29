@@ -1,0 +1,14 @@
+/// -------------------------------------------------------- /
+/// Font Mixins
+/// -------------------------------------------------------- /
+@mixin HeaderFont {
+	font-family: "Rowdies", sans-serif;
+	font-weight: 400;
+	font-style: normal;
+}
+
+@mixin BodyFont($font-weight: 400) {
+	font-family: "Poppins", sans-serif;
+	font-weight: $font-weight;
+	font-style: normal;
+}

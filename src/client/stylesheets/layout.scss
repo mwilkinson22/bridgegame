@@ -1,0 +1,35 @@
+/// -------------------------------------------------------- /
+/// Basic Layout Styling
+/// -------------------------------------------------------- /
+
+@use "variables/colours";
+@use "variables/fonts";
+@use "variables/sizing";
+
+// Theming
+body {
+	background: colours.$page-background-colour;
+	color: colours.$text-colour;
+	@include fonts.BodyFont;
+}
+
+#root {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+// Positioning
+.page-container {
+	left: 0;
+	right: 0;
+	margin: auto;
+
+	width: min(#{sizing.$page-container-max-width}, 100vw);
+
+	&.main-page {
+		padding: 10px;
+		height: 0;
+		flex-grow: 1;
+	}
+}

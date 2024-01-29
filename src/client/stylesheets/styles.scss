@@ -1,6 +1,5 @@
 @import "reset";
+@import "layout";
 
-body {
-	background: black;
-	color: white;
-}
+// Components
+@import "components/header";

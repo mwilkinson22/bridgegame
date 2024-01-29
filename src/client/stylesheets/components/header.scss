@@ -1,0 +1,17 @@
+/// -------------------------------------------------------- /
+/// The Main Page Header Component
+/// -------------------------------------------------------- /
+
+@use "../variables/colours";
+@use "../variables/fonts";
+
+header {
+	@include fonts.HeaderFont;
+
+	font-size: 28px;
+	background: colours.$header-background-colour;
+	text-align: center;
+	.page-container {
+		padding: 10px;
+	}
+}

@@ -7,6 +7,9 @@ import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { AdminPage } from "./pages/AdminPage";
 
+// Components
+import { Header } from "./components/layout/Header";
+
 export function App() {
 	const routes: RouteObject[] = [
 		{
@@ -25,6 +28,7 @@ export function App() {
 	const router = createBrowserRouter(routes);
 	return (
 		<React.StrictMode>
+			<Header />
 			<RouterProvider router={router} />
 		</React.StrictMode>
 	);
