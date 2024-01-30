@@ -1,0 +1,23 @@
+/// -------------------------------------------------------- /
+/// Sizing Variables
+/// -------------------------------------------------------- /
+$page-container-max-width: 1000px;
+
+/// -------------------------------------------------------- /
+/// Styling for hexagons and our hexagonal grid
+/// -------------------------------------------------------- /
+
+@mixin HexagonalGrid($hexagon-size) {
+	$row-height-adjustment: $hexagon-size * 0.85;
+	padding-bottom: $hexagon-size - $row-height-adjustment;
+	.hexagonal-grid-row {
+		display: flex;
+		justify-content: center;
+		height: $row-height-adjustment;
+
+		.hexagon {
+			height: $hexagon-size;
+			rotate: 90deg;
+		}
+	}
+}

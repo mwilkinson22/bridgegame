@@ -4,13 +4,14 @@
 
 @use "variables/colours";
 @use "variables/fonts";
-@use "variables/sizing";
+@use "variables/layout";
 
 // Theming
 body {
 	background: colours.$page-background-colour;
 	color: colours.$text-colour;
 	@include fonts.BodyFont;
+	user-select: none;
 }
 
 #root {
@@ -25,7 +26,7 @@ body {
 	right: 0;
 	margin: auto;
 
-	width: min(#{sizing.$page-container-max-width}, 100vw);
+	width: min(#{layout.$page-container-max-width}, 100vw);
 
 	&.main-page {
 		padding: 10px;

@@ -1,0 +1,40 @@
+/// -------------------------------------------------------- /
+/// The Loading Spinner
+/// -------------------------------------------------------- /
+@use "../variables/layout";
+
+$initial-colour: #333;
+$pulse-colour: #eee;
+$animation-time: 1000ms;
+.loading-spinner {
+	@include layout.HexagonalGrid(100px);
+
+	.hexagon {
+		fill: $initial-colour;
+		animation: loadingSpinner $animation-time infinite;
+	}
+
+	.hexagonal-grid-row:nth-child(2) .hexagon {
+		&:first-child {
+			animation-delay: $animation-time * 0.75;
+		}
+		&:last-child {
+			animation-delay: $animation-time * 0.25;
+		}
+	}
+
+	.hexagonal-grid-row:last-child .hexagon {
+		animation-delay: $animation-time * 0.5;
+	}
+}
+
+@keyframes loadingSpinner {
+	0%,
+	100% {
+		fill: $initial-colour;
+	}
+
+	50% {
+		fill: $pulse-colour;
+	}
+}
