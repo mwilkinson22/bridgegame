@@ -1,5 +1,5 @@
 // Modules
-import React from "react";
+import React, { StrictMode } from "react";
 import { RouterProvider, createBrowserRouter, RouteObject } from "react-router-dom";
 
 // Pages
@@ -11,6 +11,7 @@ import { AdminPage } from "./pages/AdminPage";
 import { Header } from "./components/layout/Header";
 
 export function App() {
+	// Handle Routes
 	const routes: RouteObject[] = [
 		{
 			path: "/admin",
@@ -27,9 +28,11 @@ export function App() {
 	];
 	const router = createBrowserRouter(routes);
 	return (
-		<React.StrictMode>
+		//<StrictMode>
+		<>
 			<Header />
 			<RouterProvider router={router} />
-		</React.StrictMode>
+		</>
+		//</StrictMode>
 	);
 }

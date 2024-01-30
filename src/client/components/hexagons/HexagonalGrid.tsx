@@ -1,24 +1,27 @@
-import React from "react";
+// Modules
+import React, { ReactNode } from "react";
+
+// Components
 import { Hexagon } from "~/client/components/hexagons/Hexagon";
 
-function getColumnInfoByRow(row: number, totalRows: number) {
-	const first = Math.abs(row - Math.floor(totalRows / 2));
-	const total = Math.ceil(totalRows / 2) - first;
-	const last = first + (total - 1) * 2;
-	return { first, last, total };
-}
+// Helpers
+import { getColumnInfoByRow } from "~/helpers/gridHelper";
+
 type Props = {
 	totalRows: number;
+	gridContent?: ReactNode[];
 };
-export function HexagonalGrid({ totalRows }: Props) {
+export function HexagonalGrid({ gridContent, totalRows }: Props) {
 	const results = [];
-
+	let cell = 0;
 	for (let row = 0; row < totalRows; row++) {
 		const { first, last, total } = getColumnInfoByRow(row, totalRows);
 		if (total) {
 			const hexes = [];
 			for (let column = first; column <= last; column += 2) {
-				hexes.push(<Hexagon row={row} column={column} key={`${column}-${row}`} />);
+				hexes.push(
+					<Hexagon row={row} column={column} key={`${column}-${row}`} cellContent={gridContent?.[cell++]} />
+				);
 			}
 
 			results.push(

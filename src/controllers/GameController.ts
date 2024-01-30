@@ -17,6 +17,7 @@ class GameController {
 		const game: Game = {
 			date: new Date(),
 			category: "Hello",
+			rows: 11,
 			board: [
 				{ isLie: false, value: "Truth 1-0" },
 				{ isLie: true, value: "Lie 1-1" },

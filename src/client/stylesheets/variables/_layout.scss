@@ -16,8 +16,25 @@ $page-container-max-width: 1000px;
 		height: $row-height-adjustment;
 
 		.hexagon {
+			position: relative;
 			height: $hexagon-size;
-			rotate: 90deg;
+			svg {
+				height: 100%;
+				rotate: 90deg;
+			}
+
+			.hexagon-content {
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				top: 0;
+				left: 0;
+				z-index: 1;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				pointer-events: none;
+			}
 		}
 	}
 }

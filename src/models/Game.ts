@@ -1,13 +1,10 @@
 // TODO
 // Turn this into a mongoose schema
-
-type BoardCell = {
-	value: string;
-	isLie: boolean;
-};
+import { GameBoardCell } from "~/types/GameBoardCell";
 
 export type Game = {
 	date: Date;
 	category: string;
-	board: BoardCell[];
+	board: GameBoardCell[];
+	rows: number;
 };

@@ -1,0 +1,12 @@
+@use "../variables/layout";
+
+.game-board {
+	overflow: auto;
+	@include layout.HexagonalGrid(90px);
+	.hexagon {
+		path {
+			fill: #eee;
+		}
+		color: black;
+	}
+}
