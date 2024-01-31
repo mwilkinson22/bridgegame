@@ -6,5 +6,5 @@ export type Game = {
 	date: Date;
 	category: string;
 	board: GameBoardCell[];
-	rows: number;
+	totalRows: number;
 };

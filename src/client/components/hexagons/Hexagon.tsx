@@ -1,26 +1,37 @@
 // Modules
-import React, { ReactNode, useContext } from "react";
+import React, { useContext } from "react";
 
 // Models & Types
-import { GridContext } from "~/client/contexts/GridContext";
+import { HexagonMetadata } from "~/client/contexts/HexagonMetadata";
 type Props = {
 	row: number;
 	column: number;
-	cellContent?: ReactNode;
 };
 
 export function Hexagon(props: Props) {
-	const gridContext = useContext(GridContext);
+	const { row, column } = props;
+	const { onClick, cellIsClickable, cellContent, cellClassNames } = useContext(HexagonMetadata);
+
+	const innerContent = cellContent(row, column);
+	const content = innerContent ? <div className="hexagon-content">{innerContent}</div> : null;
+
+	const classNames = ["hexagon"];
+	const customClassNames = cellClassNames(row, column);
+	if (Array.isArray(customClassNames)) {
+		classNames.push(...customClassNames);
+	} else if (typeof customClassNames === "string") {
+		classNames.push(customClassNames);
+	}
 
 	return (
-		<div className={"hexagon"}>
+		<div className={classNames.join(" ")}>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184.751 184.751">
 				<path
 					d="M0,92.375l46.188-80h92.378l46.185,80l-46.185,80H46.188L0,92.375z"
-					onClick={() => gridContext.onHexagonClick(props.row, props.column)}
+					onClick={() => cellIsClickable(row, column) && onClick(row, column)}
 				/>
 			</svg>
-			<div className="hexagon-content">{props.cellContent}</div>
+			{content}
 		</div>
 	);
 }

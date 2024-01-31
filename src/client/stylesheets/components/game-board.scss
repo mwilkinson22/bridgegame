@@ -1,12 +1,86 @@
 @use "../variables/layout";
 
+@mixin SetCellColours($fill, $text) {
+	path {
+		fill: $fill;
+	}
+	&.clickable {
+		path:hover {
+			fill: lighten($fill, 3%);
+		}
+	}
+	color: $text;
+}
+
 .game-board {
 	overflow: auto;
 	@include layout.HexagonalGrid(90px);
 	.hexagon {
-		path {
-			fill: #eee;
+		&.clickable {
+			cursor: pointer;
 		}
-		color: black;
+
+		&.hidden {
+			@include SetCellColours(#555, white);
+			.hexagon-content {
+				opacity: 0;
+			}
+		}
+
+		&.startend {
+			@include SetCellColours(#1a3860, white);
+		}
+
+		&.eliminator {
+			@include SetCellColours(#333, #bbb);
+			.hexagon-content {
+				font-size: 2em;
+				rotate: 60deg;
+				transform: scaleX(-100%);
+			}
+		}
+		&.eliminator.clickable,
+		&.eliminated-lie {
+			@include SetCellColours(#6f144c, #fc0);
+		}
+
+		&.clicked-truth,
+		&.revealed-truth {
+			@include SetCellColours(#157d42, white);
+		}
+		&.clicked-lie,
+		&.revealed-lie {
+			@include SetCellColours(#841212, white);
+		}
+
+		&.revealed-truth,
+		&.revealed-lie {
+			opacity: 0.4;
+		}
+
+		&.unknown-answer {
+			@include SetCellColours(#c8e3f1, black);
+		}
+
+		&:not(.hidden) {
+			.hexagon-content {
+				opacity: 0;
+				animation: reveal-cell 200ms forwards;
+				animation-delay: 300ms;
+			}
+		}
+	}
+
+	path {
+		transition: fill 400ms;
+	}
+}
+
+@keyframes reveal-cell {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
 	}
 }

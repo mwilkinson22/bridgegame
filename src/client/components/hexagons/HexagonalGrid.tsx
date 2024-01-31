@@ -1,5 +1,5 @@
 // Modules
-import React, { ReactNode } from "react";
+import React from "react";
 
 // Components
 import { Hexagon } from "~/client/components/hexagons/Hexagon";
@@ -9,19 +9,15 @@ import { getColumnInfoByRow } from "~/helpers/gridHelper";
 
 type Props = {
 	totalRows: number;
-	gridContent?: ReactNode[];
 };
-export function HexagonalGrid({ gridContent, totalRows }: Props) {
+export function HexagonalGrid({ totalRows }: Props) {
 	const results = [];
-	let cell = 0;
 	for (let row = 0; row < totalRows; row++) {
 		const { first, last, total } = getColumnInfoByRow(row, totalRows);
 		if (total) {
 			const hexes = [];
 			for (let column = first; column <= last; column += 2) {
-				hexes.push(
-					<Hexagon row={row} column={column} key={`${column}-${row}`} cellContent={gridContent?.[cell++]} />
-				);
+				hexes.push(<Hexagon row={row} column={column} key={`${column}-${row}`} />);
 			}
 
 			results.push(
