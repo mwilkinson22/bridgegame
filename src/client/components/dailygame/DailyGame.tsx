@@ -7,9 +7,9 @@ import { Game } from "~/models/Game";
 
 // Components
 import { LoadingSpinner } from "~/client/components/layout/LoadingSpinner";
-import { PlayableGameWrapper } from "~/client/components/gameboard/PlayableGameWrapper";
+import { PlayableGame } from "~/client/components/gameboard/PlayableGame";
 
-export function DailyGameWrapper() {
+export function DailyGame() {
 	const [dailyGame, setDailyGame] = useState<Game>();
 
 	useEffect(() => {
@@ -18,5 +18,5 @@ export function DailyGameWrapper() {
 		});
 	}, []);
 
-	return dailyGame ? <PlayableGameWrapper game={dailyGame} /> : <LoadingSpinner />;
+	return dailyGame ? <PlayableGame game={dailyGame} /> : <LoadingSpinner />;
 }

@@ -19,7 +19,7 @@ type Props = {
 	game: Game;
 };
 
-export function PlayableGameWrapper({ game }: Props) {
+export function PlayableGame({ game }: Props) {
 	const [points, setPoints] = useState(0);
 	const [lives, setLives] = useState(3);
 	const [board, setBoard] = useState(initialisePlayableGameBoardWithState(game));
