@@ -14,6 +14,8 @@ import { getAdjacentSpaces } from "~/helpers/gridHelper";
 // Models & Types
 import { Game } from "~/models/Game";
 import { GameState } from "~/enums/GameState";
+import { LivesCounter } from "~/client/components/gameboard/LivesCounter";
+import { PointsCounter } from "~/client/components/gameboard/PointsCounter";
 
 type Props = {
 	game: Game;
@@ -109,13 +111,11 @@ export function PlayableGame({ game }: Props) {
 	};
 	return (
 		<HexagonMetadata.Provider value={hexagonMetadata}>
-			<div className="points-tally">
-				<span>Score</span> {points}
+			<div className="game-info">
+				<LivesCounter lives={lives} />
+				<h2 className="game-category">{game.category}</h2>
+				<PointsCounter points={points} />
 			</div>
-			<div className="points-tally">
-				<span>Lives</span> {lives}/3
-			</div>
-			<div>{GameState[gameState]}</div>
 			<GameBoard game={game} />
 		</HexagonMetadata.Provider>
 	);

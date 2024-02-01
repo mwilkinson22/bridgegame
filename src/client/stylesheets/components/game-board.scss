@@ -11,6 +11,59 @@
 	}
 	color: $text;
 }
+.game-info {
+	display: grid;
+	grid-template-columns: 100px auto 100px;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 0;
+
+	.lives-counter {
+		display: flex;
+		flex-direction: row;
+		gap: 6px;
+		justify-content: flex-start;
+
+		.life {
+			width: 25px;
+			height: 25px;
+			border-radius: 100%;
+			color: #800;
+			border: 3px solid currentColor;
+			background-color: #200;
+			transition: background-color 200ms;
+
+			&.not {
+				background: currentColor;
+			}
+		}
+	}
+
+	.game-category {
+		text-align: center;
+	}
+
+	.points-counter {
+		color: #ccc;
+		text-align: right;
+		white-space: nowrap;
+		.points-ticker {
+			color: white;
+			font-weight: 600;
+			display: inline-block;
+			&.incrementing,
+			&.decrementing {
+				animation: points-change 400ms;
+			}
+			&.incrementing {
+				color: #5fcc8e;
+			}
+			&.decrementing {
+				color: #f94848;
+			}
+		}
+	}
+}
 
 .game-board {
 	overflow: auto;
@@ -82,5 +135,14 @@
 	}
 	to {
 		opacity: 1;
+	}
+}
+
+@keyframes points-change {
+	from {
+		transform: scale(1.5);
+	}
+	to {
+		transform: scale(1);
 	}
 }
