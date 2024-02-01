@@ -8,7 +8,7 @@
 
 // Theming
 body {
-	background: colours.$page-background-colour;
+	background: colours.$page-background-gradient;
 	color: colours.$text-colour;
 	@include fonts.BodyFont;
 	user-select: none;
@@ -29,8 +29,9 @@ body {
 	width: min(#{layout.$page-container-max-width}, 100vw);
 
 	&.main-page {
-		padding: 10px;
 		height: 0;
 		flex-grow: 1;
+		display: flex;
+		flex-direction: column;
 	}
 }

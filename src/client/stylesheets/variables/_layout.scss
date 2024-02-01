@@ -21,6 +21,12 @@ $page-container-max-width: 1000px;
 			svg {
 				height: 100%;
 				rotate: 90deg;
+
+				.hexagon-outline {
+					position: absolute;
+					fill: green;
+					pointer-events: none;
+				}
 			}
 
 			.hexagon-content {

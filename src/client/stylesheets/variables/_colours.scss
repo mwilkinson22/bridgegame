@@ -1,6 +1,14 @@
 /// -------------------------------------------------------- /
 /// Colour Variables
 /// -------------------------------------------------------- /
-$page-background-colour: #111;
+$page-background-colour1: #0b252d;
+$page-background-colour2: #0c1b1f;
+$page-background-gradient: linear-gradient($page-background-colour2, $page-background-colour1);
 $text-colour: white;
 $header-background-colour: #222;
+
+@mixin LightBackgroundOnHover {
+	&:hover {
+		background: rgba(white, 0.1);
+	}
+}

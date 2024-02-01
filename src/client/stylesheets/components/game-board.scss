@@ -1,3 +1,5 @@
+@use "sass:math";
+@use "../variables/colours";
 @use "../variables/layout";
 
 @mixin SetCellColours($fill, $text) {
@@ -11,62 +13,76 @@
 	}
 	color: $text;
 }
-.game-info {
-	display: grid;
-	grid-template-columns: 100px auto 100px;
-	align-items: center;
-	justify-content: space-between;
-	padding: 10px 0;
 
-	.lives-counter {
+.playable-game {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+
+	.game-info {
+		display: grid;
+		grid-template-columns: 100px auto 100px;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px 0;
+
+		.lives-counter {
+			display: flex;
+			flex-direction: row;
+			gap: 6px;
+			justify-content: flex-start;
+
+			.life {
+				width: 25px;
+				height: 25px;
+				border-radius: 100%;
+				color: #800;
+				border: 3px solid currentColor;
+				background-color: #200;
+				transition: background-color 200ms;
+
+				&.not {
+					background: currentColor;
+				}
+			}
+		}
+		.game-category {
+			text-align: center;
+		}
+
+		.points-counter {
+			color: #ccc;
+			text-align: right;
+			white-space: nowrap;
+			.points-ticker {
+				color: white;
+				font-weight: 600;
+				display: inline-block;
+				&.incrementing,
+				&.decrementing {
+					animation: points-change 400ms;
+				}
+				&.incrementing {
+					color: #5fcc8e;
+				}
+				&.decrementing {
+					color: #f94848;
+				}
+			}
+		}
+	}
+
+	.game-board {
+		flex-grow: 1;
 		display: flex;
-		flex-direction: row;
-		gap: 6px;
-		justify-content: flex-start;
-
-		.life {
-			width: 25px;
-			height: 25px;
-			border-radius: 100%;
-			color: #800;
-			border: 3px solid currentColor;
-			background-color: #200;
-			transition: background-color 200ms;
-
-			&.not {
-				background: currentColor;
-			}
-		}
-	}
-
-	.game-category {
-		text-align: center;
-	}
-
-	.points-counter {
-		color: #ccc;
-		text-align: right;
-		white-space: nowrap;
-		.points-ticker {
-			color: white;
-			font-weight: 600;
-			display: inline-block;
-			&.incrementing,
-			&.decrementing {
-				animation: points-change 400ms;
-			}
-			&.incrementing {
-				color: #5fcc8e;
-			}
-			&.decrementing {
-				color: #f94848;
-			}
-		}
+		flex-direction: column;
+		justify-content: center;
 	}
 }
 
 .game-board {
 	overflow: auto;
+	padding: 10px;
 	@include layout.HexagonalGrid(90px);
 	.hexagon {
 		&.clickable {
@@ -115,7 +131,7 @@
 			@include SetCellColours(#c8e3f1, black);
 		}
 
-		&:not(.hidden) {
+		&:not(.hidden):not(.eliminator) {
 			.hexagon-content {
 				opacity: 0;
 				animation: reveal-cell 200ms forwards;
@@ -126,6 +142,7 @@
 
 	path {
 		transition: fill 400ms;
+		rotate: 0deg;
 	}
 }
 

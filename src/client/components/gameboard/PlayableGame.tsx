@@ -33,7 +33,7 @@ export function PlayableGame({ game }: Props) {
 
 		// Set Points
 		if (!cellIsSpecial(cell)) {
-			setPoints(cell.isWrong ? points / 2 : points + 500);
+			setPoints(Math.round(cell.isWrong ? points / 2 : points + 500));
 		}
 
 		// Reduce Lives
@@ -111,12 +111,14 @@ export function PlayableGame({ game }: Props) {
 	};
 	return (
 		<HexagonMetadata.Provider value={hexagonMetadata}>
-			<div className="game-info">
-				<LivesCounter lives={lives} />
-				<h2 className="game-category">{game.category}</h2>
-				<PointsCounter points={points} />
+			<div className="playable-game">
+				<div className="game-info">
+					<LivesCounter lives={lives} />
+					<h2 className="game-category">{game.category}</h2>
+					<PointsCounter points={points} />
+				</div>
+				<GameBoard game={game} />
 			</div>
-			<GameBoard game={game} />
 		</HexagonMetadata.Provider>
 	);
 }

@@ -6,12 +6,46 @@
 @use "../variables/fonts";
 
 header {
-	@include fonts.HeaderFont;
-
 	font-size: 28px;
-	background: colours.$header-background-colour;
 	text-align: center;
+	background: colours.$header-background-colour;
+	box-shadow: 0 0 20px rgba(black, 0.4);
+
+	$header-height: 45px;
+
 	.page-container {
-		padding: 10px;
+		display: grid;
+		grid-template-columns: $header-height 1fr $header-height;
+		align-items: center;
+		height: $header-height;
+
+		h1 {
+			@include fonts.HeaderFont;
+			font-size: 28px;
+		}
+
+		.hamburger-menu,
+		.info-box {
+			@include colours.LightBackgroundOnHover;
+			cursor: pointer;
+			height: $header-height;
+			width: $header-height;
+		}
+
+		.hamburger-menu {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+			gap: 5px;
+			rotate: 0deg;
+			div {
+				width: 50%;
+				height: 2px;
+				border-radius: 2px;
+				background: white;
+				rotate: 0deg; //Forces hardware acceleration.
+			}
+		}
 	}
 }
