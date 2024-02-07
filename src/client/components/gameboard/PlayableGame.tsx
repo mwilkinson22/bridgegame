@@ -62,7 +62,7 @@ export function PlayableGame({ game }: Props) {
 		// Make Adjacent Cells Visible
 		if (!cell.isWrong) {
 			const adjacentCells = getAdjacentSpaces(row, column, game.totalRows).map(([row, column]) => findCellInBoard(board, row, column));
-			if (adjacentCells.filter(cell => cell.isEnd).length) {
+			if (adjacentCells.some(cell => cell.isEnd)) {
 				setGameState(GameState.Won);
 			} else {
 				adjacentCells.forEach(cell => (cell.isVisible = true));

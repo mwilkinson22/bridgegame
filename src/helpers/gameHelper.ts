@@ -60,10 +60,8 @@ export function initialisePlayableGameBoardWithState(game: Game): GameBoardCellW
 	return board;
 }
 
-export function findCellInBoard(board: GameBoardCellWithState[], row: number, column: number): GameBoardCellWithState {
-	// TODO Replace this with "find" once I've scrapped decorators and re-enabled ES2015 support.
-	return board.filter(cell => cell.row === row && cell.column === column)[0];
-}
+export const findCellInBoard = (board: GameBoardCellWithState[], row: number, column: number): GameBoardCellWithState =>
+	board.find(cell => cell.row === row && cell.column === column) as GameBoardCellWithState;
 
 export const cellIsClickable = (cell: GameBoardCellWithState): boolean => cell.isVisible && !cell.hasBeenClicked && !cell.hasBeenEliminated && !cell.isEnd;
 

@@ -2,17 +2,17 @@
 import { Request, Response } from "express";
 
 //Decorators
-import { controller, get } from "./decorators";
+import { Controller } from "./types/Controller";
 
 //Models
 import { Game } from "~/models/Game";
 
 //Controller
-@controller("/api/games")
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-class GameController {
-	@get("/daily")
-	async dailyGame(req: Request, res: Response) {
+const GameController = new Controller("/api/games");
+
+GameController.get(
+	"/daily",
+	(req: Request, res: Response): Response => {
 		// A temporary dummy game
 		const game: Game = {
 			date: new Date(),
@@ -53,6 +53,6 @@ class GameController {
 				{ isWrong: false, row: 9, column: 6, value: "Right" }
 			]
 		};
-		res.send(game);
+		return res.send(game);
 	}
-}
+);
