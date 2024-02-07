@@ -1,8 +1,10 @@
 // Modules
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 // Components
 import { GameBoard } from "./GameBoard";
+import { GameSummaryDialog } from "~/client/components/gameboard/GameSummaryDialog";
+import { GameResultDialog } from "~/client/components/gameboard/GameResultDialog";
 
 // Context
 import { HexagonMetadata, HexagonMetadataContext } from "~/client/contexts/HexagonMetadata";
@@ -16,7 +18,7 @@ import { Game } from "~/models/Game";
 import { GameState } from "~/enums/GameState";
 import { LivesCounter } from "~/client/components/gameboard/LivesCounter";
 import { PointsCounter } from "~/client/components/gameboard/PointsCounter";
-import { GameSummaryDialog } from "~/client/components/gameboard/GameSummaryDialog";
+import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
 
 type Props = {
 	game: Game;
@@ -28,6 +30,8 @@ export function PlayableGame({ game }: Props) {
 	const [board, setBoard] = useState(initialisePlayableGameBoardWithState(game));
 	const [gameState, setGameState] = useState(GameState.InProgress);
 	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
+	const [showGameResults, setShowGameResults] = useState(false);
+	const [progressArray, setProgressArray] = useState<GameProgressArrayContents[]>([]);
 
 	const handleCellClick = (row: number, column: number) => {
 		const cell = findCellInBoard(board, row, column);
@@ -36,14 +40,15 @@ export function PlayableGame({ game }: Props) {
 		// Set Points
 		if (!cellIsSpecial(cell)) {
 			setPoints(Math.round(cell.isWrong ? points / 2 : points + 500));
-		}
+			setProgressArray(prevState => [...prevState, cell.isWrong ? GameProgressArrayContents.clickedWrong : GameProgressArrayContents.clickedRight]);
 
-		// Reduce Lives
-		if (cell.isWrong) {
-			const newLives = lives - 1;
-			setLives(newLives);
-			if (newLives < 1) {
-				setGameState(GameState.Lost);
+			// Reduce Lives
+			if (cell.isWrong) {
+				const newLives = lives - 1;
+				setLives(newLives);
+				if (newLives < 1) {
+					setGameState(GameState.Lost);
+				}
 			}
 		}
 
@@ -59,6 +64,7 @@ export function PlayableGame({ game }: Props) {
 			const lie = lies[Math.floor(Math.random() * lies.length)];
 			lie.isVisible = true;
 			lie.hasBeenEliminated = true;
+			setProgressArray(prevState => [...prevState, GameProgressArrayContents.eliminated]);
 		}
 
 		// Make Adjacent Cells Visible
@@ -73,6 +79,8 @@ export function PlayableGame({ game }: Props) {
 
 		setBoard([...board]);
 	};
+
+	useEffect(() => setShowGameResults(gameState != GameState.InProgress), [gameState]);
 
 	// Handle Context
 	const hexagonMetadata: HexagonMetadataContext = {
@@ -117,18 +125,31 @@ export function PlayableGame({ game }: Props) {
 		gameSummaryDialog = <GameSummaryDialog game={game} onDestroy={() => setShowGameSummary(false)} />;
 	}
 
+	let gameResultsDialog;
+	if (showGameResults) {
+		gameResultsDialog = (
+			<GameResultDialog gameState={gameState} lives={lives} points={points} progressArray={progressArray} onDestroy={() => setShowGameResults(false)} />
+		);
+	}
+
 	return (
 		<HexagonMetadata.Provider value={hexagonMetadata}>
 			<div className="playable-game">
 				<div className="game-info">
 					<LivesCounter lives={lives} />
-					<h2 className="game-title" onClick={() => setShowGameSummary(true)}>
+					<h2
+						className="game-title"
+						onClick={() => {
+							gameState === GameState.InProgress ? setShowGameSummary(true) : setShowGameResults(true);
+						}}
+					>
 						{game.title} ⓘ
 					</h2>
 					<PointsCounter points={points} />
 				</div>
 				<GameBoard game={game} />
 				{gameSummaryDialog}
+				{gameResultsDialog}
 			</div>
 		</HexagonMetadata.Provider>
 	);

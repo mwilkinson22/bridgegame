@@ -104,3 +104,15 @@
 		}
 	}
 }
+
+.game-result-dialog {
+	.game-result-summary {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: 10px 20px;
+
+		label {
+			font-weight: bold;
+		}
+	}
+}

@@ -7,6 +7,7 @@ import { getColumnInfoByRow, getMiddleRow } from "~/helpers/gridHelper";
 // Types
 import { PartialWithRequired } from "~/types/UtilityTypes";
 import { GameBoardCellWithState } from "~/types/GameBoardCell";
+import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
 
 export function initialisePlayableGameBoardWithState(game: Game): GameBoardCellWithState[] {
 	const { totalRows } = game;
@@ -66,3 +67,17 @@ export const findCellInBoard = (board: GameBoardCellWithState[], row: number, co
 export const cellIsClickable = (cell: GameBoardCellWithState): boolean => cell.isVisible && !cell.hasBeenClicked && !cell.hasBeenEliminated && !cell.isEnd;
 
 export const cellIsSpecial = (cell: GameBoardCellWithState): boolean => cell.isStart || cell.isEnd || cell.isEliminator;
+
+export const convertProgressArrayToEmoji = (progressArray: GameProgressArrayContents[]): string =>
+	progressArray
+		.map(c => {
+			switch (c) {
+				case GameProgressArrayContents.clickedRight:
+					return "🟩";
+				case GameProgressArrayContents.clickedWrong:
+					return "🟥";
+				case GameProgressArrayContents.eliminated:
+					return "🟪";
+			}
+		})
+		.join("");
