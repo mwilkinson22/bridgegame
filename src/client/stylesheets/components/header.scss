@@ -3,6 +3,7 @@
 /// -------------------------------------------------------- /
 
 @use "../variables/colours";
+@use "../variables/layout";
 @use "../variables/fonts";
 
 header {
@@ -33,10 +34,8 @@ header {
 		}
 
 		.hamburger-menu {
-			display: flex;
+			@include layout.CentredFlexbox;
 			flex-direction: column;
-			justify-content: center;
-			align-items: center;
 			gap: 5px;
 			rotate: 0deg;
 			div {

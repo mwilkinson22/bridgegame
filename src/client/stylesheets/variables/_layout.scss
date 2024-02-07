@@ -4,6 +4,15 @@
 $page-container-max-width: 1000px;
 
 /// -------------------------------------------------------- /
+/// Utility Layout Functions
+/// -------------------------------------------------------- /
+@mixin CentredFlexbox {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/// -------------------------------------------------------- /
 /// Styling for hexagons and our hexagonal grid
 /// -------------------------------------------------------- /
 
@@ -11,8 +20,7 @@ $page-container-max-width: 1000px;
 	$row-height-adjustment: $hexagon-size * 0.85;
 	padding-bottom: $hexagon-size - $row-height-adjustment;
 	.hexagonal-grid-row {
-		display: flex;
-		justify-content: center;
+		@include CentredFlexbox;
 		height: $row-height-adjustment;
 
 		.hexagon {
@@ -36,9 +44,7 @@ $page-container-max-width: 1000px;
 				top: 0;
 				left: 0;
 				z-index: 1;
-				display: flex;
-				justify-content: center;
-				align-items: center;
+				@include CentredFlexbox;
 				pointer-events: none;
 			}
 		}

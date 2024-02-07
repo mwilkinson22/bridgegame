@@ -24,7 +24,7 @@
 		grid-template-columns: 100px auto 100px;
 		align-items: center;
 		justify-content: space-between;
-		padding: 10px 0;
+		padding: 10px;
 
 		.lives-counter {
 			display: flex;
@@ -74,9 +74,8 @@
 
 	.game-board {
 		flex-grow: 1;
-		display: flex;
+		@include layout.CentredFlexbox;
 		flex-direction: column;
-		justify-content: center;
 	}
 }
 
@@ -134,7 +133,7 @@
 		&:not(.hidden):not(.eliminator) {
 			.hexagon-content {
 				opacity: 0;
-				animation: reveal-cell 200ms forwards;
+				animation: fade-in 200ms forwards;
 				animation-delay: 300ms;
 			}
 		}
