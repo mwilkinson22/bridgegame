@@ -1,0 +1,106 @@
+@use "../variables/colours";
+@use "../variables/layout";
+@use "game-board";
+
+.playable-game {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+
+	.game-info {
+		display: grid;
+		grid-template-columns: 100px 1fr 100px;
+		align-items: center;
+		justify-content: space-between;
+		padding: 10px;
+
+		.lives-counter {
+			display: flex;
+			flex-direction: row;
+			gap: 6px;
+			justify-content: flex-start;
+
+			.life {
+				width: 25px;
+				height: 25px;
+				border-radius: 100%;
+				color: #800;
+				border: 3px solid currentColor;
+				background-color: #200;
+				transition: background-color 200ms;
+
+				&.not {
+					background: currentColor;
+				}
+			}
+		}
+		.game-title {
+			@include colours.LightBackgroundOnHover;
+			text-align: center;
+		}
+
+		.points-counter {
+			color: #ccc;
+			text-align: right;
+			white-space: nowrap;
+			.points-ticker {
+				color: white;
+				font-weight: 600;
+				display: inline-block;
+				&.incrementing,
+				&.decrementing {
+					animation: points-change 400ms;
+				}
+				&.incrementing {
+					color: #5fcc8e;
+				}
+				&.decrementing {
+					color: #f94848;
+				}
+			}
+		}
+	}
+
+	.game-board {
+		flex-grow: 1;
+		@include layout.CentredFlexbox;
+		flex-direction: column;
+	}
+}
+
+.game-summary-dialog {
+	.right-and-wrong-wrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 20px;
+		position: relative;
+		text-align: center;
+		&::after {
+			content: "";
+			height: 100%;
+			width: 1px;
+			background: rgba(white, 0.1);
+			top: 0;
+			left: 0;
+			right: 0;
+			margin: auto;
+			position: absolute;
+		}
+		.right-answer-header,
+		.wrong-answer-header {
+			width: auto;
+			padding: 4px;
+			border-radius: 6px;
+			color: white;
+			font-weight: 600;
+			margin-bottom: 10px;
+		}
+
+		.right-answer-header {
+			background: game-board.$right-answer-colour;
+		}
+		.wrong-answer-header {
+			background: game-board.$wrong-answer-colour;
+		}
+	}
+}

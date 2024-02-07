@@ -16,7 +16,10 @@ GameController.get(
 		// A temporary dummy game
 		const game: Game = {
 			date: new Date(),
-			category: "Hello",
+			title: "Right or Wrong",
+			description: "This is an example game, which contains right and wrong answers.",
+			rightAnswerDescription: "The word 'right'",
+			wrongAnswerDescription: "The word 'wrong'. Or anything that's not the word 'right'.",
 			totalRows: 11,
 			board: [
 				{ isWrong: false, row: 1, column: 4, value: "Right" },

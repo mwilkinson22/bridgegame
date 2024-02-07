@@ -28,9 +28,12 @@ header {
 		.hamburger-menu,
 		.info-box {
 			@include colours.LightBackgroundOnHover;
-			cursor: pointer;
 			height: $header-height;
 			width: $header-height;
+		}
+
+		.info-box {
+			font-weight: 600;
 		}
 
 		.hamburger-menu {

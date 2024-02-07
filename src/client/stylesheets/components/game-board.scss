@@ -1,6 +1,7 @@
-@use "sass:math";
-@use "../variables/colours";
 @use "../variables/layout";
+
+$right-answer-colour: #157d42;
+$wrong-answer-colour: #841212;
 
 @mixin SetCellColours($fill, $text) {
 	path {
@@ -12,71 +13,6 @@
 		}
 	}
 	color: $text;
-}
-
-.playable-game {
-	flex-grow: 1;
-	display: flex;
-	flex-direction: column;
-
-	.game-info {
-		display: grid;
-		grid-template-columns: 100px auto 100px;
-		align-items: center;
-		justify-content: space-between;
-		padding: 10px;
-
-		.lives-counter {
-			display: flex;
-			flex-direction: row;
-			gap: 6px;
-			justify-content: flex-start;
-
-			.life {
-				width: 25px;
-				height: 25px;
-				border-radius: 100%;
-				color: #800;
-				border: 3px solid currentColor;
-				background-color: #200;
-				transition: background-color 200ms;
-
-				&.not {
-					background: currentColor;
-				}
-			}
-		}
-		.game-category {
-			text-align: center;
-		}
-
-		.points-counter {
-			color: #ccc;
-			text-align: right;
-			white-space: nowrap;
-			.points-ticker {
-				color: white;
-				font-weight: 600;
-				display: inline-block;
-				&.incrementing,
-				&.decrementing {
-					animation: points-change 400ms;
-				}
-				&.incrementing {
-					color: #5fcc8e;
-				}
-				&.decrementing {
-					color: #f94848;
-				}
-			}
-		}
-	}
-
-	.game-board {
-		flex-grow: 1;
-		@include layout.CentredFlexbox;
-		flex-direction: column;
-	}
 }
 
 .game-board {
@@ -114,11 +50,11 @@
 
 		&.clicked-truth,
 		&.revealed-truth {
-			@include SetCellColours(#157d42, white);
+			@include SetCellColours($right-answer-colour, white);
 		}
 		&.clicked-lie,
 		&.revealed-lie {
-			@include SetCellColours(#841212, white);
+			@include SetCellColours($wrong-answer-colour, white);
 		}
 
 		&.revealed-truth,

@@ -2,9 +2,11 @@
 import React, { PropsWithChildren, useState } from "react";
 
 // Types
+export type DialogDestroyFunction = () => void;
 type Props = PropsWithChildren & {
+	className?: string;
 	title: string;
-	onDestroy: () => void;
+	onDestroy: DialogDestroyFunction;
 };
 
 export const Dialog = (props: Props) => {
@@ -17,14 +19,24 @@ export const Dialog = (props: Props) => {
 		setTimeout(props.onDestroy, 200);
 	}
 
+	const backgroundClassNames = ["dialog-background"];
+	if (isClosing) {
+		backgroundClassNames.push("closing");
+	}
+
+	const dialogClassNames = ["dialog"];
+	if (props.className) {
+		dialogClassNames.push(props.className);
+	}
+
 	return (
-		<div className={`dialog-background ${isClosing ? "closing" : ""}`} onClick={destroy} style={{ animationDuration: animationDuration + "ms" }}>
-			<div className="dialog" onClick={e => e.stopPropagation()}>
+		<div className={backgroundClassNames.join(" ")} onClick={destroy} style={{ animationDuration: animationDuration + "ms" }}>
+			<div className={dialogClassNames.join(" ")} onClick={e => e.stopPropagation()}>
 				<div className="close-dialog-cross" onClick={destroy}>
 					🗙
 				</div>
 				<h2 className="dialog-title">{props.title}</h2>
-				{props.children}
+				<div className="dialog-content">{props.children}</div>
 			</div>
 		</div>
 	);

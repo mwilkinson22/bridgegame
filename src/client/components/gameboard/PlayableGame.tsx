@@ -16,6 +16,7 @@ import { Game } from "~/models/Game";
 import { GameState } from "~/enums/GameState";
 import { LivesCounter } from "~/client/components/gameboard/LivesCounter";
 import { PointsCounter } from "~/client/components/gameboard/PointsCounter";
+import { GameSummaryDialog } from "~/client/components/gameboard/GameSummaryDialog";
 
 type Props = {
 	game: Game;
@@ -26,6 +27,7 @@ export function PlayableGame({ game }: Props) {
 	const [lives, setLives] = useState(3);
 	const [board, setBoard] = useState(initialisePlayableGameBoardWithState(game));
 	const [gameState, setGameState] = useState(GameState.InProgress);
+	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
 
 	const handleCellClick = (row: number, column: number) => {
 		const cell = findCellInBoard(board, row, column);
@@ -109,15 +111,24 @@ export function PlayableGame({ game }: Props) {
 			return classNames;
 		}
 	};
+
+	let gameSummaryDialog;
+	if (showGameSummary) {
+		gameSummaryDialog = <GameSummaryDialog game={game} onDestroy={() => setShowGameSummary(false)} />;
+	}
+
 	return (
 		<HexagonMetadata.Provider value={hexagonMetadata}>
 			<div className="playable-game">
 				<div className="game-info">
 					<LivesCounter lives={lives} />
-					<h2 className="game-category">{game.category}</h2>
+					<h2 className="game-title" onClick={() => setShowGameSummary(true)}>
+						{game.title} ⓘ
+					</h2>
 					<PointsCounter points={points} />
 				</div>
 				<GameBoard game={game} />
+				{gameSummaryDialog}
 			</div>
 		</HexagonMetadata.Provider>
 	);

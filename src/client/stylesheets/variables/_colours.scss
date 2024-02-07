@@ -1,5 +1,5 @@
 /// -------------------------------------------------------- /
-/// Colour Variables
+/// Basic Layout Colours
 /// -------------------------------------------------------- /
 $page-background-colour1: #0b252d;
 $page-background-colour2: #0c1b1f;
@@ -10,5 +10,6 @@ $header-background-colour: #222;
 @mixin LightBackgroundOnHover {
 	&:hover {
 		background: rgba(white, 0.1);
+		cursor: pointer;
 	}
 }

@@ -7,8 +7,8 @@ $animation-time: 200ms;
 	position: fixed;
 	top: 0;
 	left: 0;
-	width: 100%;
-	height: 100%;
+	width: 100vw;
+	height: 100vh;
 	background: rgba(colours.$page-background-colour2, 0.4);
 	z-index: 10;
 	animation: fade-in;
@@ -16,8 +16,8 @@ $animation-time: 200ms;
 	padding: 20px;
 
 	.dialog {
-		width: min(600px, 100vw);
-		max-height: 100vh;
+		width: min(800px, 100%);
+		max-height: min(800px, 100%);
 		min-height: 200px;
 		background: colours.$page-background-colour1;
 		border-radius: 10px;
@@ -27,6 +27,9 @@ $animation-time: 200ms;
 		border: solid 1px colours.$page-background-colour2;
 		padding: 20px 50px;
 		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
 
 		.dialog-title {
 			width: 100%;
@@ -34,7 +37,6 @@ $animation-time: 200ms;
 			border-bottom: solid rgba(white, 0.1) 1px;
 			line-height: 1;
 			padding-bottom: 10px;
-			margin-bottom: 15px;
 		}
 
 		.close-dialog-cross {
@@ -49,6 +51,13 @@ $animation-time: 200ms;
 			&:hover {
 				background: rgba(colours.$page-background-colour2, 0.6);
 			}
+		}
+
+		.dialog-content {
+			overflow: auto;
+			display: flex;
+			flex-direction: column;
+			gap: inherit;
 		}
 	}
 

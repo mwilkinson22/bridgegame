@@ -4,7 +4,10 @@ import { GameBoardCell } from "~/types/GameBoardCell";
 
 export type Game = {
 	date: Date;
-	category: string;
+	title: string;
+	description: string;
+	rightAnswerDescription: string;
+	wrongAnswerDescription: string;
 	board: GameBoardCell[];
 	totalRows: number;
 };
