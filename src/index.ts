@@ -1,9 +1,16 @@
 // Modules
 import path from "path";
 import express, { Request, Response } from "express";
-import { AppRouter } from "./AppRouter";
+import mongoose from "mongoose";
 
+// Get Config
+import config from "./config";
+const { mongoURI } = config;
+
+// Set up Mongoose
+mongoose.connect(mongoURI);
 // Set up express app
+import { AppRouter } from "./AppRouter";
 const app = express();
 
 // Set up routing
