@@ -10,7 +10,7 @@ import { GameResultDialog } from "~/client/components/gameboard/GameResultDialog
 import { HexagonMetadata, HexagonMetadataContext } from "~/client/contexts/HexagonMetadata";
 
 // Helpers
-import { cellIsClickable, cellIsSpecial, findCellInBoard, initialisePlayableGameBoardWithState } from "~/helpers/gameHelper";
+import { cellIsClickable, cellIsSpecial, findCellInBoard, initialisePlayableGameState } from "~/helpers/gameHelper";
 import { getAdjacentSpaces } from "~/helpers/gridHelper";
 
 // Models & Types
@@ -27,7 +27,7 @@ type Props = {
 export function PlayableGame({ game }: Props) {
 	const [points, setPoints] = useState(0);
 	const [lives, setLives] = useState(3);
-	const [board, setBoard] = useState(initialisePlayableGameBoardWithState(game));
+	const [board, setBoard] = useState(initialisePlayableGameState(game));
 	const [gameState, setGameState] = useState(GameState.InProgress);
 	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
 	const [showGameResults, setShowGameResults] = useState(false);
@@ -80,7 +80,7 @@ export function PlayableGame({ game }: Props) {
 		setBoard([...board]);
 	};
 
-	useEffect(() => setShowGameResults(gameState != GameState.InProgress), [gameState]);
+	useEffect(() => setShowGameResults(gameState !== GameState.InProgress), [gameState]);
 
 	// Handle Context
 	const hexagonMetadata: HexagonMetadataContext = {

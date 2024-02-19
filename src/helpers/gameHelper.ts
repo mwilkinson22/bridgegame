@@ -9,7 +9,7 @@ import { PartialWithRequired } from "~/types/UtilityTypes";
 import { GameBoardCellWithState } from "~/types/GameBoardCell";
 import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
 
-export function initialisePlayableGameBoardWithState(game: Game): GameBoardCellWithState[] {
+export function initialisePlayableGameState(game: Game): GameBoardCellWithState[] {
 	const { totalRows } = game;
 	const createCell = (data: PartialWithRequired<GameBoardCellWithState, "row" | "column">): GameBoardCellWithState => {
 		return {
