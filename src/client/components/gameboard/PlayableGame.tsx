@@ -132,11 +132,12 @@ export function PlayableGame({ game, initialProgress }: Props) {
 	// Conditionally show the Game Results Dialog
 	useEffect(() => {
 		const gameComplete = gameState !== GameState.InProgress;
-		setShowGameResults(gameComplete);
-
-		// If we load a game that's been previously completed, we don't want to show the summary on render.
 		if (gameComplete) {
+			// If we load a game that's been previously completed, we don't want to show the summary on render.
 			setShowGameSummary(false);
+
+			// Allow a quick delay before showing the dialog.
+			setTimeout(() => setShowGameResults(true), 2000);
 		}
 	}, [gameState]);
 
