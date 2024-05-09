@@ -106,6 +106,8 @@ export function PlayableGame({ game, initialProgress }: Props) {
 	// Set Points
 	useEffect(() => {
 		let points = 0;
+
+		// Work out points from cells clicked
 		progressArray.forEach(({ cellType }) => {
 			switch (cellType) {
 				case GameProgressArrayContents.rightAnswer:
@@ -117,8 +119,13 @@ export function PlayableGame({ game, initialProgress }: Props) {
 			}
 		});
 
+		// If the game has been won, add bonus points for leftover lives
+		if (gameState === GameState.Won) {
+			points += lives * GAMEPLAY_CONSTANTS.CORRECT_ANSWER_POINTS;
+		}
+
 		setPoints(points);
-	}, [board]);
+	}, [board, gameState]);
 
 	// Set the Game State
 	useEffect(() => {
@@ -138,7 +145,8 @@ export function PlayableGame({ game, initialProgress }: Props) {
 			setShowGameSummary(false);
 
 			// Allow a quick delay before showing the dialog.
-			setTimeout(() => setShowGameResults(true), 2000);
+			setTimeout(() => setShowGameResults(true), GAMEPLAY_CONSTANTS.RESULTS_DIALOG_DELAY);
+			setTimeout(() => setShowGameResultLink(true), GAMEPLAY_CONSTANTS.RESULTS_DIALOG_LINK_DELAY);
 		}
 	}, [gameState]);
 
@@ -207,10 +215,7 @@ export function PlayableGame({ game, initialProgress }: Props) {
 				points={points}
 				progressArray={progressArray}
 				board={board}
-				onDestroy={() => {
-					setShowGameResults(false);
-					setShowGameResultLink(true);
-				}}
+				onDestroy={() => setShowGameResults(false)}
 			/>
 		);
 	}
@@ -229,12 +234,7 @@ export function PlayableGame({ game, initialProgress }: Props) {
 			<div className="playable-game">
 				<div className="game-info">
 					<LivesCounter lives={lives} />
-					<h2
-						className="game-title"
-						onClick={() => {
-							gameState === GameState.InProgress ? setShowGameSummary(true) : setShowGameResults(true);
-						}}
-					>
+					<h2 className="game-title" onClick={() => setShowGameSummary(true)}>
 						{game.title} ⓘ
 					</h2>
 					<PointsCounter points={points} />

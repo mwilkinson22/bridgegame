@@ -123,12 +123,23 @@
 
 .game-result-dialog {
 	.game-result-summary {
-		display: grid;
-		grid-template-columns: auto 1fr;
-		gap: 10px 20px;
-
 		label {
 			font-weight: bold;
+		}
+
+		@media #{layout.$mobile-only} {
+			display: flex;
+			flex-direction: column;
+			text-align: center;
+			label:not(:first-child) {
+				margin-top: 10px;
+			}
+		}
+
+		@media #{layout.$desktop-and-tablet} {
+			display: grid;
+			grid-template-columns: auto 1fr;
+			gap: 10px 20px;
 		}
 	}
 }
