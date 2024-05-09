@@ -1,4 +1,14 @@
 /// -------------------------------------------------------- /
+/// Devices
+/// -------------------------------------------------------- /
+$mobile-max-width: 600px;
+$tablet-max-width: 900px;
+$mobile-only: "only screen and (max-width: #{$mobile-max-width})";
+$mobile-and-tablet: "only screen and (max-width: #{$tablet-max-width})";
+$desktop-and-tablet: "only screen and (min-width: #{$mobile-max-width})";
+$desktop-only: "only screen and (min-width: #{$tablet-max-width})";
+
+// / -------------------------------------------------------- /
 /// Sizing Variables
 /// -------------------------------------------------------- /
 $page-container-max-width: 1000px;

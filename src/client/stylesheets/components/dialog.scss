@@ -25,7 +25,11 @@ $animation-time: 200ms;
 		animation-name: zoom-in;
 		box-shadow: 0 0 10px colours.$page-background-colour2;
 		border: solid 1px colours.$page-background-colour2;
-		padding: 20px 50px;
+		padding: 20px;
+		@media #{layout.$desktop-and-tablet} {
+			padding-right: 50px;
+			padding-left: 50px;
+		}
 		position: relative;
 		display: flex;
 		flex-direction: column;
