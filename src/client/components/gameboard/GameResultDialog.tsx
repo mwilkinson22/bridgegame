@@ -6,14 +6,14 @@ import { Dialog, DialogDestroyFunction } from "~/client/components/dialogs/Dialo
 
 // Types
 import { GameState } from "~/enums/GameState";
-import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
-import { convertProgressArrayToEmoji } from "~/helpers/gameHelper";
+import { GameProgress } from "~/enums/GameProgress";
+import { convertProgressToEmoji } from "~/helpers/gameHelper";
 
 type Props = {
 	gameState: GameState;
 	points: number;
 	lives: number;
-	progressArray: GameProgressArrayContents[];
+	progressArray: GameProgress;
 	onDestroy: DialogDestroyFunction;
 };
 
@@ -26,7 +26,7 @@ export const GameResultDialog = (props: Props) => {
 				<label>Lives Lost</label>
 				<span>{3 - props.lives}/3</span>
 				<label>Progress</label>
-				<span>{convertProgressArrayToEmoji(props.progressArray)}</span>
+				<span>{convertProgressToEmoji(props.progressArray, props.gameState)}</span>
 			</div>
 			{/* TODO share to socials */}
 		</Dialog>

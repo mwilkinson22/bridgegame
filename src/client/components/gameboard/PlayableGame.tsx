@@ -18,7 +18,7 @@ import { Game } from "~/models/Game";
 import { GameState } from "~/enums/GameState";
 import { LivesCounter } from "~/client/components/gameboard/LivesCounter";
 import { PointsCounter } from "~/client/components/gameboard/PointsCounter";
-import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
+import { GameProgress, GameProgressArrayContents } from "~/enums/GameProgress";
 
 type Props = {
 	game: Game;
@@ -31,7 +31,7 @@ export function PlayableGame({ game }: Props) {
 	const [gameState, setGameState] = useState(GameState.InProgress);
 	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
 	const [showGameResults, setShowGameResults] = useState(false);
-	const [progressArray, setProgressArray] = useState<GameProgressArrayContents[]>([]);
+	const [progressArray, setProgressArray] = useState<GameProgress>([]);
 
 	const handleCellClick = (row: number, column: number) => {
 		const cell = findCellInBoard(board, row, column);
@@ -40,7 +40,14 @@ export function PlayableGame({ game }: Props) {
 		// Set Points
 		if (!cellIsSpecial(cell)) {
 			setPoints(Math.round(cell.isWrong ? points / 2 : points + 500));
-			setProgressArray(prevState => [...prevState, cell.isWrong ? GameProgressArrayContents.clickedWrong : GameProgressArrayContents.clickedRight]);
+			setProgressArray(prevState => [
+				...prevState,
+				{
+					row,
+					column,
+					cellType: cell.isWrong ? GameProgressArrayContents.wrongAnswer : GameProgressArrayContents.rightAnswer
+				}
+			]);
 
 			// Reduce Lives
 			if (cell.isWrong) {
@@ -64,7 +71,19 @@ export function PlayableGame({ game }: Props) {
 			const lie = lies[Math.floor(Math.random() * lies.length)];
 			lie.isVisible = true;
 			lie.hasBeenEliminated = true;
-			setProgressArray(prevState => [...prevState, GameProgressArrayContents.eliminated]);
+			setProgressArray(prevState => [
+				...prevState,
+				{
+					row,
+					column,
+					cellType: GameProgressArrayContents.eliminatorCell
+				},
+				{
+					row: lie.row,
+					column: lie.column,
+					cellType: GameProgressArrayContents.eliminatedAnswer
+				}
+			]);
 		}
 
 		// Make Adjacent Cells Visible

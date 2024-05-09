@@ -7,7 +7,8 @@ import { getColumnInfoByRow, getMiddleRow } from "~/helpers/gridHelper";
 // Types
 import { PartialWithRequired } from "~/types/UtilityTypes";
 import { GameBoardCellWithState } from "~/types/GameBoardCell";
-import { GameProgressArrayContents } from "~/enums/GameProgressArrayContents";
+import { GameProgress, GameProgressArrayContents } from "~/enums/GameProgress";
+import { GameState } from "~/enums/GameState";
 
 export function initialisePlayableGameState(game: Game): GameBoardCellWithState[] {
 	const { totalRows } = game;
@@ -68,16 +69,30 @@ export const cellIsClickable = (cell: GameBoardCellWithState): boolean => cell.i
 
 export const cellIsSpecial = (cell: GameBoardCellWithState): boolean => cell.isStart || cell.isEnd || cell.isEliminator;
 
-export const convertProgressArrayToEmoji = (progressArray: GameProgressArrayContents[]): string =>
-	progressArray
-		.map(c => {
-			switch (c) {
-				case GameProgressArrayContents.clickedRight:
+export const convertProgressToEmoji = (gameProgress: GameProgress, gameState: GameState): string => {
+	let result = gameProgress
+		.map(progressEntry => {
+			switch (progressEntry.cellType) {
+				case GameProgressArrayContents.rightAnswer:
 					return "🟩";
-				case GameProgressArrayContents.clickedWrong:
+				case GameProgressArrayContents.wrongAnswer:
 					return "🟥";
-				case GameProgressArrayContents.eliminated:
+				case GameProgressArrayContents.eliminatorCell:
 					return "🟪";
+				default:
+					return "";
 			}
 		})
 		.join("");
+
+	switch (gameState) {
+		case GameState.Won:
+			result += "🎊";
+			break;
+		case GameState.Lost:
+			result += "💀";
+			break;
+	}
+
+	return result;
+};
