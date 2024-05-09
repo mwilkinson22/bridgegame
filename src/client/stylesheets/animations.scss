@@ -36,3 +36,26 @@
 		transform: scale(0.9);
 	}
 }
+
+@mixin increaseHeightTo($value, $changeOpacity: false) {
+	$keyframeName: increaseHeightTo#{$value};
+	@if $changeOpacity {
+		$keyframeName: $keyframeName + "WithOpacity";
+	}
+	@keyframes #{$keyframeName} {
+		from {
+			height: 0;
+			@if $changeOpacity {
+				opacity: 0;
+			}
+		}
+		to {
+			height: $value;
+			@if $changeOpacity {
+				opacity: 1;
+			}
+		}
+	}
+	animation-name: $keyframeName;
+	animation-fill-mode: forwards;
+}

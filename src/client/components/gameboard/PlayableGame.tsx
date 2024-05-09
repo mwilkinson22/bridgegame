@@ -35,6 +35,7 @@ export function PlayableGame({ game, initialProgress }: Props) {
 	const [gameState, setGameState] = useState(GameState.InProgress);
 	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
 	const [showGameResults, setShowGameResults] = useState(false);
+	const [showGameResultLink, setShowGameResultLink] = useState(false);
 
 	const handleCellClick = (row: number, column: number) => {
 		const cell = findCellInBoard(board, row, column);
@@ -193,8 +194,20 @@ export function PlayableGame({ game, initialProgress }: Props) {
 				points={points}
 				progressArray={progressArray}
 				board={board}
-				onDestroy={() => setShowGameResults(false)}
+				onDestroy={() => {
+					setShowGameResults(false);
+					setShowGameResultLink(true);
+				}}
 			/>
+		);
+	}
+
+	let viewResultsLink;
+	if (showGameResultLink) {
+		viewResultsLink = (
+			<div className="game-view-results-link" onClick={() => setShowGameResults(true)}>
+				View Results
+			</div>
 		);
 	}
 
@@ -212,6 +225,7 @@ export function PlayableGame({ game, initialProgress }: Props) {
 						{game.title} ⓘ
 					</h2>
 					<PointsCounter points={points} />
+					{viewResultsLink}
 				</div>
 				<GameBoard game={game} />
 				{gameSummaryDialog}

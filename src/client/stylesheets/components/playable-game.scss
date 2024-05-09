@@ -1,5 +1,6 @@
 @use "../variables/colours";
 @use "../variables/layout";
+@use "../animations";
 @use "game-board";
 
 .playable-game {
@@ -13,6 +14,14 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 10px;
+
+		@media #{layout.$mobile-only} {
+			grid-template-columns: 1fr 1fr;
+			.game-title {
+				grid-row: 1;
+				grid-column: 1 / -1;
+			}
+		}
 
 		.lives-counter {
 			display: flex;
@@ -34,9 +43,18 @@
 				}
 			}
 		}
-		.game-title {
+		.game-title,
+		.game-view-results-link {
 			@include colours.LightBackgroundOnHover;
 			text-align: center;
+		}
+
+		.game-view-results-link {
+			@include animations.increaseHeightTo(36px, true);
+			@include layout.CentredFlexbox;
+			animation-duration: 500ms;
+			overflow: hidden;
+			grid-column: 1 / -1;
 		}
 
 		.points-counter {
