@@ -115,10 +115,10 @@
 		}
 
 		.right-answer-header {
-			background: game-board.$right-answer-colour;
+			background: colours.$right-answer-colour;
 		}
 		.wrong-answer-header {
-			background: game-board.$wrong-answer-colour;
+			background: colours.$wrong-answer-colour;
 		}
 	}
 }

@@ -1,7 +1,5 @@
+@use "../variables/colours";
 @use "../variables/layout";
-
-$right-answer-colour: #157d42;
-$wrong-answer-colour: #841212;
 
 @mixin SetCellColours($fill, $text) {
 	path {
@@ -48,14 +46,14 @@ $wrong-answer-colour: #841212;
 			@include SetCellColours(#6f144c, #fc0);
 		}
 
-		&.clicked-truth,
-		&.revealed-truth {
-			@include SetCellColours($right-answer-colour, white);
-		}
-		&.clicked-lie,
-		&.revealed-lie {
-			@include SetCellColours($wrong-answer-colour, white);
-		}
+				&.clicked-truth,
+				&.revealed-truth {
+					@include SetCellColours(colours.$right-answer-colour, white);
+				}
+				&.clicked-lie,
+				&.revealed-lie {
+					@include SetCellColours(colours.$wrong-answer-colour, white);
+				}
 
 		&.revealed-truth,
 		&.revealed-lie {
