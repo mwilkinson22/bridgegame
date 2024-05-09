@@ -187,7 +187,14 @@ export function PlayableGame({ game, initialProgress }: Props) {
 	let gameResultsDialog;
 	if (showGameResults) {
 		gameResultsDialog = (
-			<GameResultDialog gameState={gameState} lives={lives} points={points} progressArray={progressArray} onDestroy={() => setShowGameResults(false)} />
+			<GameResultDialog
+				gameState={gameState}
+				lives={lives}
+				points={points}
+				progressArray={progressArray}
+				board={board}
+				onDestroy={() => setShowGameResults(false)}
+			/>
 		);
 	}
 
