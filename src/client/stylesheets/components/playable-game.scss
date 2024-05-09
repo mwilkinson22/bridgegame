@@ -1,7 +1,6 @@
 @use "../variables/colours";
 @use "../variables/layout";
 @use "../animations";
-@use "game-board";
 
 .playable-game {
 	flex-grow: 1;
@@ -79,10 +78,9 @@
 		}
 	}
 
-	.game-board {
+	.game-board-wrapper {
+		height: 0;
 		flex-grow: 1;
-		@include layout.CentredFlexbox;
-		flex-direction: column;
 	}
 }
 

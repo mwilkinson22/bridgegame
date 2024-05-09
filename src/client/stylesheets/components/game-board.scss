@@ -13,38 +13,45 @@
 	color: $text;
 }
 
-.game-board {
-	overflow: auto;
-	padding: 10px;
-	@include layout.HexagonalGrid(90px);
-	.hexagon {
-		&.clickable {
-			cursor: pointer;
-		}
+.game-board-wrapper {
+	max-width: 100%;
+	display: flex;
+	justify-content: center;
 
-		&.hidden {
-			@include SetCellColours(#555, white);
-			.hexagon-content {
-				opacity: 0;
-			}
-		}
+	.game-board-scroll-container {
+		overflow: auto;
 
-		&.startend {
-			@include SetCellColours(#1a3860, white);
-		}
+		.game-board {
+			padding: 10px 30px;
+			@include layout.HexagonalGrid(90px);
+			.hexagon {
+				&.clickable {
+					cursor: pointer;
+				}
 
-		&.eliminator {
-			@include SetCellColours(#333, #bbb);
-			.hexagon-content {
-				font-size: 2em;
-				rotate: 60deg;
-				transform: scaleX(-100%);
-			}
-		}
-		&.eliminator.clickable,
-		&.eliminated-lie {
-			@include SetCellColours(#6f144c, #fc0);
-		}
+				&.hidden {
+					@include SetCellColours(#555, white);
+					.hexagon-content {
+						opacity: 0;
+					}
+				}
+
+				&.startend {
+					@include SetCellColours(#1a3860, white);
+				}
+
+				&.eliminator {
+					@include SetCellColours(#333, #bbb);
+					.hexagon-content {
+						font-size: 2em;
+						rotate: 60deg;
+						transform: scaleX(-100%);
+					}
+				}
+				&.eliminator.clickable,
+				&.eliminated-lie {
+					@include SetCellColours(#6f144c, #fc0);
+				}
 
 				&.clicked-truth,
 				&.revealed-truth {
@@ -55,27 +62,29 @@
 					@include SetCellColours(colours.$wrong-answer-colour, white);
 				}
 
-		&.revealed-truth,
-		&.revealed-lie {
-			opacity: 0.4;
-		}
+				&.revealed-truth,
+				&.revealed-lie {
+					opacity: 0.4;
+				}
 
-		&.unknown-answer {
-			@include SetCellColours(#c8e3f1, black);
-		}
+				&.unknown-answer {
+					@include SetCellColours(#c8e3f1, black);
+				}
 
-		&:not(.hidden):not(.eliminator) {
-			.hexagon-content {
-				opacity: 0;
-				animation: fade-in 200ms forwards;
-				animation-delay: 300ms;
+				&:not(.hidden):not(.eliminator) {
+					.hexagon-content {
+						opacity: 0;
+						animation: fade-in 200ms forwards;
+						animation-delay: 300ms;
+					}
+				}
+			}
+
+			path {
+				transition: fill 400ms;
+				rotate: 0deg;
 			}
 		}
-	}
-
-	path {
-		transition: fill 400ms;
-		rotate: 0deg;
 	}
 }
 

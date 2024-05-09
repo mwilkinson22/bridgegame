@@ -1,5 +1,5 @@
 // Modules
-import React, { useContext } from "react";
+import React, { CSSProperties, useContext } from "react";
 
 // Models & Types
 import { HexagonMetadata } from "~/client/contexts/HexagonMetadata";
@@ -10,7 +10,7 @@ type Props = {
 
 export function Hexagon(props: Props) {
 	const { row, column } = props;
-	const { onClick, cellIsClickable, cellContent, cellClassNames } = useContext(HexagonMetadata);
+	const { onClick, cellIsClickable, cellContent, cellClassNames, cellRef } = useContext(HexagonMetadata);
 
 	const innerContent = cellContent(row, column);
 	const content = innerContent ? <div className="hexagon-content">{innerContent}</div> : null;
@@ -23,8 +23,14 @@ export function Hexagon(props: Props) {
 		classNames.push(customClassNames);
 	}
 
+	// Create CSS Grid Properties
+	const gridProperties: CSSProperties = {
+		gridRow: row + 1,
+		gridColumn: `${column + 1}/${column + 3}`
+	};
+
 	return (
-		<div className={classNames.join(" ")}>
+		<div className={classNames.join(" ")} style={gridProperties} ref={cellRef(row, column)}>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184.751 184.751">
 				<path
 					d="M0,92.375l46.188-80h92.378l46.185,80l-46.185,80H46.188L0,92.375z"

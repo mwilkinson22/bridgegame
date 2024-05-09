@@ -1,5 +1,5 @@
 // Modules
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 // Components
 import { GameBoard } from "./GameBoard";
@@ -142,6 +142,12 @@ export function PlayableGame({ game, initialProgress }: Props) {
 		}
 	}, [gameState]);
 
+	// Center-scroll the Start cell
+	const startCellRef = useRef(document.createElement("div"));
+	useLayoutEffect(() => {
+		startCellRef.current.scrollIntoView({ inline: "center" });
+	}, []);
+
 	// Handle Context
 	const hexagonMetadata: HexagonMetadataContext = {
 		onClick: handleCellClick,
@@ -177,6 +183,13 @@ export function PlayableGame({ game, initialProgress }: Props) {
 			}
 
 			return classNames;
+		},
+		cellRef: (row, column) => {
+			const cell = findCellInBoard(board, row, column);
+			if (cell.isStart) {
+				return startCellRef;
+			}
+			return null;
 		}
 	};
 

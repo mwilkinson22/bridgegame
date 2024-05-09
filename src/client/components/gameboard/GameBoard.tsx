@@ -11,7 +11,11 @@ type Props = {
 };
 
 export const GameBoard = (props: Props) => (
-	<div className="game-board">
-		<HexagonalGrid totalRows={props.game.totalRows} />
+	<div className="game-board-wrapper">
+		<div className="game-board-scroll-container">
+			<div className="game-board">
+				<HexagonalGrid totalRows={props.game.totalRows} />
+			</div>
+		</div>
 	</div>
 );

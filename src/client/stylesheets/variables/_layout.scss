@@ -29,34 +29,28 @@ $page-container-max-width: 1000px;
 @mixin HexagonalGrid($hexagon-size) {
 	$row-height-adjustment: $hexagon-size * 0.85;
 	padding-bottom: $hexagon-size - $row-height-adjustment;
-	.hexagonal-grid-row {
-		@include CentredFlexbox;
-		height: $row-height-adjustment;
 
-		.hexagon {
-			position: relative;
-			height: $hexagon-size;
-			svg {
-				height: 100%;
-				rotate: 90deg;
+	display: grid;
+	grid-auto-rows: $row-height-adjustment;
+	grid-auto-columns: $hexagon-size / 2;
 
-				.hexagon-outline {
-					position: absolute;
-					fill: green;
-					pointer-events: none;
-				}
-			}
+	.hexagon {
+		position: relative;
+		height: $hexagon-size;
+		svg {
+			height: 100%;
+			rotate: 90deg;
+		}
 
-			.hexagon-content {
-				position: absolute;
-				width: 100%;
-				height: 100%;
-				top: 0;
-				left: 0;
-				z-index: 1;
-				@include CentredFlexbox;
-				pointer-events: none;
-			}
+		.hexagon-content {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			z-index: 1;
+			@include CentredFlexbox;
+			pointer-events: none;
 		}
 	}
 }
