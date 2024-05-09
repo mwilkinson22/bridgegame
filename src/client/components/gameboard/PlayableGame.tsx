@@ -10,8 +10,7 @@ import { GameResultDialog } from "~/client/components/gameboard/GameResultDialog
 import { HexagonMetadata, HexagonMetadataContext } from "~/client/contexts/HexagonMetadata";
 
 // Helpers
-import { cellIsClickable, cellIsSpecial, findCellInBoard, initialisePlayableGameState } from "~/helpers/gameHelper";
-import { getAdjacentSpaces } from "~/helpers/gridHelper";
+import { cellIsClickable, cellIsSpecial, findCellInBoard, gameHasBeenWon, initialisePlayableGameState, revealCellNeighbours } from "~/helpers/gameHelper";
 
 // Models & Types
 import { Game } from "~/models/Game";
@@ -22,16 +21,17 @@ import { GameProgress, GameProgressArrayContents } from "~/enums/GameProgress";
 
 type Props = {
 	game: Game;
+	initialProgress?: GameProgress;
 };
 
-export function PlayableGame({ game }: Props) {
+export function PlayableGame({ game, initialProgress }: Props) {
 	const [points, setPoints] = useState(0);
 	const [lives, setLives] = useState(3);
-	const [board, setBoard] = useState(initialisePlayableGameState(game));
+	const [progressArray, setProgressArray] = useState<GameProgress>(initialProgress ?? []);
+	const [board, setBoard] = useState(initialisePlayableGameState(game, progressArray));
 	const [gameState, setGameState] = useState(GameState.InProgress);
 	const [showGameSummary, setShowGameSummary] = useState(false); // TODO Set to true by default - but not during early development!
 	const [showGameResults, setShowGameResults] = useState(false);
-	const [progressArray, setProgressArray] = useState<GameProgress>([]);
 
 	const handleCellClick = (row: number, column: number) => {
 		const cell = findCellInBoard(board, row, column);
@@ -39,7 +39,6 @@ export function PlayableGame({ game }: Props) {
 
 		// Set Points
 		if (!cellIsSpecial(cell)) {
-			setPoints(Math.round(cell.isWrong ? points / 2 : points + 500));
 			setProgressArray(prevState => [
 				...prevState,
 				{
@@ -48,15 +47,6 @@ export function PlayableGame({ game }: Props) {
 					cellType: cell.isWrong ? GameProgressArrayContents.wrongAnswer : GameProgressArrayContents.rightAnswer
 				}
 			]);
-
-			// Reduce Lives
-			if (cell.isWrong) {
-				const newLives = lives - 1;
-				setLives(newLives);
-				if (newLives < 1) {
-					setGameState(GameState.Lost);
-				}
-			}
 		}
 
 		// Eliminate
@@ -87,19 +77,65 @@ export function PlayableGame({ game }: Props) {
 		}
 
 		// Make Adjacent Cells Visible
-		if (!cell.isWrong) {
-			const adjacentCells = getAdjacentSpaces(row, column, game.totalRows).map(([row, column]) => findCellInBoard(board, row, column));
-			if (adjacentCells.some(cell => cell.isEnd)) {
-				setGameState(GameState.Won);
-			} else {
-				adjacentCells.forEach(cell => (cell.isVisible = true));
-			}
+		revealCellNeighbours(cell, board, game.totalRows);
+
+		if (cell.isStart) {
+			setProgressArray(prevState => [
+				...prevState,
+				{
+					row,
+					column,
+					cellType: GameProgressArrayContents.startCell
+				}
+			]);
 		}
 
 		setBoard([...board]);
 	};
 
-	useEffect(() => setShowGameResults(gameState !== GameState.InProgress), [gameState]);
+	// Set Lives
+	useEffect(() => {
+		const lostLives = board.filter(cell => cell.isWrong && cell.hasBeenClicked).length;
+		setLives(3 - lostLives);
+	}, [board]);
+
+	// Set Points
+	useEffect(() => {
+		let points = 0;
+		progressArray.forEach(({ cellType }) => {
+			switch (cellType) {
+				case GameProgressArrayContents.rightAnswer:
+					points += 1000;
+					break;
+				case GameProgressArrayContents.wrongAnswer:
+					points = points / 2;
+					break;
+			}
+		});
+
+		setPoints(points);
+	}, [board]);
+
+	// Set the Game State
+	useEffect(() => {
+		// Check for a loss.
+		if (lives < 1) {
+			setGameState(GameState.Lost);
+		} else if (gameHasBeenWon(board, game.totalRows)) {
+			setGameState(GameState.Won);
+		}
+	}, [board, lives]);
+
+	// Conditionally show the Game Results Dialog
+	useEffect(() => {
+		const gameComplete = gameState !== GameState.InProgress;
+		setShowGameResults(gameComplete);
+
+		// If we load a game that's been previously completed, we don't want to show the summary on render.
+		if (gameComplete) {
+			setShowGameSummary(false);
+		}
+	}, [gameState]);
 
 	// Handle Context
 	const hexagonMetadata: HexagonMetadataContext = {

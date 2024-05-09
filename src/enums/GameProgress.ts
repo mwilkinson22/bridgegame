@@ -2,7 +2,8 @@ export enum GameProgressArrayContents {
 	rightAnswer,
 	wrongAnswer,
 	eliminatedAnswer,
-	eliminatorCell
+	eliminatorCell,
+	startCell
 }
 
 export type GameProgressEntry = {
