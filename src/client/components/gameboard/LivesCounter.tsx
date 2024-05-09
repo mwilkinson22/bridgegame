@@ -1,6 +1,9 @@
 // Modules
 import React from "react";
 
+// Constants
+import { GAMEPLAY_CONSTANTS } from "~/config/constants";
+
 // Types
 type Props = {
 	lives: number;
@@ -8,7 +11,7 @@ type Props = {
 
 export function LivesCounter(props: Props) {
 	const lifeIndicators = [];
-	for (let i = 2; i >= 0; i--) {
+	for (let i = GAMEPLAY_CONSTANTS.INITIAL_LIVES; i > 0; i--) {
 		lifeIndicators.push(<div key={i} className={`life ${props.lives > i ? "used" : "not"}`} />);
 	}
 

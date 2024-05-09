@@ -1,5 +1,5 @@
 // Modules
-import mongoose, { Schema, model, SchemaDefinitionType, SchemaDefinition, Model, HydratedDocument, Types, Require_id } from "mongoose";
+import mongoose, { Schema, model, SchemaDefinitionType, SchemaDefinition, Model, HydratedDocument, Types } from "mongoose";
 
 type SchemaObject<T> = SchemaDefinition<SchemaDefinitionType<T>, Model<T>>;
 

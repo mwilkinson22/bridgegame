@@ -1,5 +1,4 @@
 // Modules
-import path from "path";
 import express, { Request, Response } from "express";
 import mongoose from "mongoose";
 
@@ -8,7 +7,8 @@ import config from "./config";
 const { mongoURI } = config;
 
 // Set up Mongoose
-mongoose.connect(mongoURI);
+mongoose.connect(mongoURI).then(() => {});
+
 // Set up express app
 import { AppRouter } from "./AppRouter";
 const app = express();
@@ -25,7 +25,8 @@ app.all("/api*", (req: Request, res: Response) => {
 app.use(express.static("dist/public"));
 
 // Homepage
-app.get("*", (req: Request, res: Response) => res.sendFile(path.resolve("public", "index.html")));
+import BasePage from "~/client/pages/BasePage";
+app.get("*", (req: Request, res: Response) => res.send(BasePage));
 
 // Start App
 const PORT = process.env.PORT || 3000;

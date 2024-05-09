@@ -6,6 +6,9 @@ import { GameBoard } from "./GameBoard";
 import { GameSummaryDialog } from "~/client/components/gameboard/GameSummaryDialog";
 import { GameResultDialog } from "~/client/components/gameboard/GameResultDialog";
 
+// Constants
+import { GAMEPLAY_CONSTANTS } from "~/config/constants";
+
 // Context
 import { HexagonMetadata, HexagonMetadataContext } from "~/client/contexts/HexagonMetadata";
 
@@ -26,7 +29,7 @@ type Props = {
 
 export function PlayableGame({ game, initialProgress }: Props) {
 	const [points, setPoints] = useState(0);
-	const [lives, setLives] = useState(3);
+	const [lives, setLives] = useState(GAMEPLAY_CONSTANTS.INITIAL_LIVES);
 	const [progressArray, setProgressArray] = useState<GameProgress>(initialProgress ?? []);
 	const [board, setBoard] = useState(initialisePlayableGameState(game, progressArray));
 	const [gameState, setGameState] = useState(GameState.InProgress);
@@ -96,7 +99,7 @@ export function PlayableGame({ game, initialProgress }: Props) {
 	// Set Lives
 	useEffect(() => {
 		const lostLives = board.filter(cell => cell.isWrong && cell.hasBeenClicked).length;
-		setLives(3 - lostLives);
+		setLives(GAMEPLAY_CONSTANTS.INITIAL_LIVES - lostLives);
 	}, [board]);
 
 	// Set Points
@@ -105,10 +108,10 @@ export function PlayableGame({ game, initialProgress }: Props) {
 		progressArray.forEach(({ cellType }) => {
 			switch (cellType) {
 				case GameProgressArrayContents.rightAnswer:
-					points += 1000;
+					points += GAMEPLAY_CONSTANTS.CORRECT_ANSWER_POINTS;
 					break;
 				case GameProgressArrayContents.wrongAnswer:
-					points = points / 2;
+					points = points * GAMEPLAY_CONSTANTS.INCORRECT_ANSWER_POINTS_MULTIPLIER;
 					break;
 			}
 		});
