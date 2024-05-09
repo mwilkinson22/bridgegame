@@ -11,8 +11,8 @@ type Props = {
 
 export function LivesCounter(props: Props) {
 	const lifeIndicators = [];
-	for (let i = GAMEPLAY_CONSTANTS.INITIAL_LIVES; i > 0; i--) {
-		lifeIndicators.push(<div key={i} className={`life ${props.lives > i ? "used" : "not"}`} />);
+	for (let i = 0; i < GAMEPLAY_CONSTANTS.INITIAL_LIVES; i++) {
+		lifeIndicators.push(<div key={i} className={`life ${props.lives > i ? "not" : "used"}`} />);
 	}
 
 	return <div className="lives-counter">{lifeIndicators}</div>;
