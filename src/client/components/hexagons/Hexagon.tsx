@@ -10,7 +10,7 @@ type Props = {
 
 export function Hexagon(props: Props) {
 	const { row, column } = props;
-	const { onClick, cellIsClickable, cellContent, cellClassNames, cellRef } = useContext(HexagonMetadata);
+	const { onClick, cellIsClickable, cellContent, cellClassNames } = useContext(HexagonMetadata);
 
 	const innerContent = cellContent(row, column);
 	const content = innerContent ? <div className="hexagon-content">{innerContent}</div> : null;
@@ -30,7 +30,7 @@ export function Hexagon(props: Props) {
 	};
 
 	return (
-		<div className={classNames.join(" ")} style={gridProperties} ref={cellRef(row, column)}>
+		<div className={classNames.join(" ")} style={gridProperties}>
 			<svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184.751 184.751" className={"hexagon-svg"}>
 				<path
 					d="M0,92.375l46.188-80h92.378l46.185,80l-46.185,80H46.188L0,92.375z"
