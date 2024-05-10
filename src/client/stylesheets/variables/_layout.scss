@@ -1,3 +1,5 @@
+@use "sass:math";
+
 /// -------------------------------------------------------- /
 /// Devices
 /// -------------------------------------------------------- /
@@ -32,7 +34,7 @@ $page-container-max-width: 1000px;
 
 	display: grid;
 	grid-auto-rows: $row-height-adjustment;
-	grid-auto-columns: $hexagon-size / 2;
+	grid-auto-columns: math.div($hexagon-size, 2);
 
 	.hexagon {
 		position: relative;
