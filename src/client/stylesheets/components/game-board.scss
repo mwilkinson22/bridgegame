@@ -2,7 +2,7 @@
 @use "../variables/layout";
 
 @mixin SetCellColours($fill, $text) {
-	path {
+	.hexagon-svg path {
 		fill: $fill;
 	}
 	&.clickable {
@@ -10,6 +10,11 @@
 			fill: lighten($fill, 3%);
 		}
 	}
+
+	.hexagon-content svg {
+		fill: $text;
+	}
+
 	color: $text;
 }
 
@@ -42,10 +47,14 @@
 
 				&.eliminator {
 					@include SetCellColours(#333, #bbb);
-					.hexagon-content {
-						font-size: 2em;
-						rotate: 60deg;
-						transform: scaleX(-100%);
+
+					.eliminator-symbol {
+						width: 40%;
+						height: 40%;
+						.eliminator-svg {
+							height: 100%;
+							width: 100%;
+						}
 					}
 				}
 				&.eliminator.clickable,

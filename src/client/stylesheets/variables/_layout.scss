@@ -39,7 +39,8 @@ $page-container-max-width: 1000px;
 	.hexagon {
 		position: relative;
 		height: $hexagon-size;
-		svg {
+
+		.hexagon-svg {
 			height: 100%;
 			rotate: 90deg;
 		}

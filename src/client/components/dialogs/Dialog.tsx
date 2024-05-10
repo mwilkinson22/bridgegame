@@ -33,7 +33,7 @@ export const Dialog = (props: Props) => {
 		<div className={backgroundClassNames.join(" ")} onClick={destroy} style={{ animationDuration: animationDuration + "ms" }}>
 			<div className={dialogClassNames.join(" ")} onClick={e => e.stopPropagation()}>
 				<div className="close-dialog-cross" onClick={destroy}>
-					🗙
+					⨯
 				</div>
 				<h2 className="dialog-title">{props.title}</h2>
 				<div className="dialog-content">{props.children}</div>

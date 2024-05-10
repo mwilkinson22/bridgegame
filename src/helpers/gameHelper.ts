@@ -9,6 +9,7 @@ import { PartialWithRequired } from "~/types/UtilityTypes";
 import { GameBoardCell, GameBoardCellWithState } from "~/types/GameBoardCell";
 import { GameProgress, GameProgressArrayContents } from "~/enums/GameProgress";
 import { GameState } from "~/enums/GameState";
+import { EliminatorSymbol } from "~/client/components/gameboard/EliminatorSymbol";
 
 export function initialisePlayableGameState(game: Game, initialProgress: GameProgress): GameBoardCellWithState[] {
 	const { totalRows } = game;
@@ -42,7 +43,7 @@ export function initialisePlayableGameState(game: Game, initialProgress: GamePro
 	// Create our "Eliminator" cells
 	const middleRow = getMiddleRow(totalRows);
 	const { first: firstColumn, last: lastColumn } = getColumnInfoByRow(middleRow, totalRows);
-	const eliminatorTemplate = createCell({ row: middleRow, column: -1, isEliminator: true, value: "🗲" });
+	const eliminatorTemplate = createCell({ row: middleRow, column: -1, isEliminator: true, value: EliminatorSymbol() });
 
 	board.push(
 		// Add a "Start" cell

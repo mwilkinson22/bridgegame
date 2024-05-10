@@ -1,5 +1,7 @@
+import { ReactNode } from "react";
+
 export type GameBoardCell = {
-	value: string;
+	value: ReactNode;
 	isWrong: boolean;
 	row: number;
 	column: number;

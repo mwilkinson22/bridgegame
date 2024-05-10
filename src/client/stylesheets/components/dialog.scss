@@ -46,6 +46,7 @@ $animation-time: 200ms;
 		.close-dialog-cross {
 			@include layout.CentredFlexbox;
 			position: absolute;
+			font-size: 28px;
 			top: 10px;
 			right: 5px;
 			width: 40px;
